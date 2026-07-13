@@ -50,7 +50,7 @@ button:disabled{background:#999}
 <div id="status"></div>
 </div>
 <script>
-const API="GANTI_DENGAN_URL_WEBAPP";
+const API="https://script.google.com/macros/s/AKfycbxu2kklzIUIPozlqscps0Zq2SuqvqV98CWT4w-XFWjOkDH0y0MLv7sBK0eJvt12eo6fXQ/exec";
 function toast(msg,ok){const t=toastEl=document.getElementById("toast");t.className="toast "+(ok?"success":"error");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",3000);}
 fetch(API+"?action=master").then(r=>r.json()).then(d=>{
 sopir.innerHTML=d.sopir.map(v=>`<option>${v}</option>`).join("");
