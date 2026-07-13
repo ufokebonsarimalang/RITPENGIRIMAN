@@ -132,7 +132,24 @@ dklk:dklk.value,selfie:Number(selfie.value),
 keterangan:keterangan.value
 })}).then(r=>r.text()).then(res=>{
 btn.disabled=false;status.textContent="";
-if(res.indexOf("ok")>-1){toast("Data berhasil disimpan",true);}
+if(res.indexOf("ok")>-1){
+
+    toast("Data berhasil disimpan", true);
+
+    // Kosongkan form
+    sj.value = "";
+    tanggal.value = "";
+    faktur.value = "";
+    selfie.value = 0;
+    keterangan.value = "";
+
+    // Kembalikan ke pilihan awal
+    dklk.selectedIndex = 0;
+
+    // Fokus kembali ke No SJ
+    sj.focus();
+
+}
 else{toast(res,false);}
 }).catch(e=>{btn.disabled=false;status.textContent="";toast("Gagal mengirim",false);});
 }
