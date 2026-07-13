@@ -6,7 +6,7 @@
 <title>UFO RIT SYSTEM</title>
 <style>
 body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;padding:16px;display:flex;justify-content:center}
-.card{background:#fff;max-width:800px;width:100%;padding:18px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.card{background:#fff;max-width:700px;width:100%;padding:18px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 h2{text-align:center;margin:0 0 16px}
 .label{font-weight:bold;margin:10px 0 5px}
 input,select,button{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px}
@@ -46,7 +46,6 @@ button:disabled{background:#999}
 <body>
 <div class="card">
 <h2>INPUT RIT RITAN PENGIRIMAN</h2>
-<div id="toast" class="toast"></div>
 
 
 
@@ -98,7 +97,7 @@ button:disabled{background:#999}
 </div>
 
 <div class="full">
-<button onclick="kirim()">KIRIM DATA</button>
+<button id="btn" onclick="kirim()">KIRIM DATA</button>
 </div>
 
 <div class="status full" id="status"></div>
@@ -113,6 +112,17 @@ sopir.innerHTML=d.sopir.map(v=>`<option>${v}</option>`).join("");
 kernet.innerHTML=d.kernet.map(v=>`<option>${v}</option>`).join("");
 });
 function kirim(){
+  const btn = document.getElementById("btn");
+const status = document.getElementById("status");
+
+const sopir = document.getElementById("sopir");
+const kernet = document.getElementById("kernet");
+const sj = document.getElementById("sj");
+const tanggal = document.getElementById("tanggal");
+const faktur = document.getElementById("faktur");
+const dklk = document.getElementById("dklk");
+const selfie = document.getElementById("selfie");
+const keterangan = document.getElementById("keterangan");
 if(!sj.value||!tanggal.value||!faktur.value){toast("Lengkapi data.",false);return;}
 btn.disabled=true;status.textContent="Mengirim...";
 fetch(API,{method:"POST",body:JSON.stringify({
