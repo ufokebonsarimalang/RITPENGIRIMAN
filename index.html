@@ -15,6 +15,32 @@ button:disabled{background:#999}
 .toast{display:none;padding:10px;border-radius:8px;margin-bottom:10px;text-align:center;font-weight:bold}
 .success{background:#d4edda;color:#155724}
 .error{background:#f8d7da;color:#721c24}
+  /* ===== FORM 2 KOLOM ===== */
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.form-item{
+  display:flex;
+  flex-direction:column;
+}
+
+.full{
+  grid-column:1 / -1;
+}
+
+/* HP */
+@media(max-width:600px){
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+}
 </style>
 </head>
 <body>
