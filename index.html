@@ -48,32 +48,62 @@ button:disabled{background:#999}
 <h2>INPUT RIT RITAN PENGIRIMAN</h2>
 <div id="toast" class="toast"></div>
 
+<h2>INPUT RIT RITAN PENGIRIMAN</h2>
+
+<div id="toast" class="toast full"></div>
+
+<div class="form-grid">
+
+<div class="form-item">
 <div class="label">SOPIR</div>
 <select id="sopir"></select>
+</div>
 
+<div class="form-item">
 <div class="label">KERNET</div>
 <select id="kernet"></select>
+</div>
 
-<div class="label">NO SURAT JALAN</div>
+<div class="form-item">
+<div class="label">NO SJ</div>
 <input id="sj" placeholder="Masukkan No SJ">
+</div>
 
+<div class="form-item">
 <div class="label">TANGGAL SURAT JALAN</div>
 <input type="date" id="tanggal">
+</div>
 
+<div class="form-item">
 <div class="label">NO FAKTUR</div>
 <input id="faktur" placeholder="Masukkan No Faktur">
+</div>
 
+<div class="form-item">
 <div class="label">DK / LK</div>
-<select id="dklk"><option>DK</option><option>LK</option></select>
+<select id="dklk">
+<option value="DK">DK</option>
+<option value="LK">LK</option>
+</select>
+</div>
 
+<div class="form-item">
 <div class="label">SELFIE</div>
 <input type="number" id="selfie" value="0" min="0">
+</div>
 
+<div class="form-item">
 <div class="label">KETERANGAN</div>
-<input id="keterangan" placeholder="Isi keterangan">
+<input id="keterangan">
+</div>
 
-<button id="btn" onclick="kirim()">KIRIM DATA</button>
-<div id="status"></div>
+<div class="full">
+<button onclick="kirim()">KIRIM DATA</button>
+</div>
+
+<div class="status full" id="status"></div>
+
+</div>
 </div>
 <script>
 const API="https://script.google.com/macros/s/AKfycbxu2kklzIUIPozlqscps0Zq2SuqvqV98CWT4w-XFWjOkDH0y0MLv7sBK0eJvt12eo6fXQ/exec";
