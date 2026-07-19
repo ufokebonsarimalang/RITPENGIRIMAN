@@ -47,8 +47,6 @@ button:disabled{background:#999}
 <div class="card">
 <h2>INPUT RIT RITAN PENGIRIMAN</h2>
 
-
-
 <div id="toast" class="toast full"></div>
 
 <div class="form-grid">
@@ -86,9 +84,10 @@ button:disabled{background:#999}
 </select>
 </div>
 
+<!-- UBAHAN 1: Mengubah Input Selfie Menjadi Pilihan Tanggal -->
 <div class="form-item">
-<div class="label">SELFIE</div>
-<input type="number" id="selfie" value="0" min="0">
+<div class="label">TANGGAL TERIMA</div>
+<input type="date" id="selfie">
 </div>
 
 <div class="form-item">
@@ -106,52 +105,75 @@ button:disabled{background:#999}
 </div>
 <script>
 const API="https://script.google.com/macros/s/AKfycbxu2kklzIUIPozlqscps0Zq2SuqvqV98CWT4w-XFWjOkDH0y0MLv7sBK0eJvt12eo6fXQ/exec";
+
 function toast(msg,ok){const t=toastEl=document.getElementById("toast");t.className="toast "+(ok?"success":"error");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",3000);}
+
 fetch(API+"?action=master").then(r=>r.json()).then(d=>{
-sopir.innerHTML=d.sopir.map(v=>`<option>${v}</option>`).join("");
-kernet.innerHTML=d.kernet.map(v=>`<option>${v}</option>`).join("");
+document.getElementById("sopir").innerHTML=d.sopir.map(v=>`<option>${v}</option>`).join("");
+document.getElementById("kernet").innerHTML=d.kernet.map(v=>`<option>${v}</option>`).join("");
 });
+
 function kirim(){
   const btn = document.getElementById("btn");
-const status = document.getElementById("status");
+  const status = document.getElementById("status");
 
-const sopir = document.getElementById("sopir");
-const kernet = document.getElementById("kernet");
-const sj = document.getElementById("sj");
-const tanggal = document.getElementById("tanggal");
-const faktur = document.getElementById("faktur");
-const dklk = document.getElementById("dklk");
-const selfie = document.getElementById("selfie");
-const keterangan = document.getElementById("keterangan");
-if(!sj.value||!tanggal.value||!faktur.value){toast("Lengkapi data.",false);return;}
-btn.disabled=true;status.textContent="Mengirim...";
-fetch(API,{method:"POST",body:JSON.stringify({
-sopir:sopir.value,kernet:kernet.value,sj:sj.value,
-tanggal:tanggal.value,faktur:faktur.value,
-dklk:dklk.value,selfie:Number(selfie.value),
-keterangan:keterangan.value
-})}).then(r=>r.text()).then(res=>{
-btn.disabled=false;status.textContent="";
-if(res.indexOf("ok")>-1){
+  const sopir = document.getElementById("sopir");
+  const kernet = document.getElementById("kernet");
+  const sj = document.getElementById("sj");
+  const tanggal = document.getElementById("tanggal");
+  const faktur = document.getElementById("faktur");
+  const dklk = document.getElementById("dklk");
+  const selfie = document.getElementById("selfie"); // Sekarang bertindak sebagai input Tanggal baru
+  const keterangan = document.getElementById("keterangan");
 
-    toast("Data berhasil disimpan", true);
+  // Validasi agar tanggal input baru ini juga wajib diisi
+  if(!sj.value||!tanggal.value||!faktur.value||!selfie.value){
+    toast("Lengkapi seluruh data termasuk Tanggal Terima.",false);
+    return;
+  }
 
-    // Kosongkan form
-    sj.value = "";
-    tanggal.value = "";
-    faktur.value = "";
-    selfie.value = 0;
-    keterangan.value = "";
+  btn.disabled=true;
+  status.textContent="Mengirim...";
 
-    // Kembalikan ke pilihan awal
-    dklk.selectedIndex = 0;
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      sopir:sopir.value,
+      kernet:kernet.value,
+      sj:sj.value,
+      tanggal:tanggal.value,
+      faktur:faktur.value,
+      dklk:dklk.value,
+      selfie:selfie.value, // UBAHAN 2: Dikirim sebagai string tanggal mentah (Tanpa konversi Number)
+      keterangan:keterangan.value
+    })
+  })
+  .then(r=>r.text())
+  .then(res=>{
+    btn.disabled=false;
+    status.textContent="";
+    if(res.indexOf("ok")>-1){
+        toast("Data berhasil disimpan", true);
 
-    // Fokus kembali ke No SJ
-    sj.focus();
+        // UBAHAN 3: Bersihkan form pengisian tanggal setelah sukses
+        sj.value = "";
+        tanggal.value = "";
+        faktur.value = "";
+        selfie.value = ""; 
+        keterangan.value = "";
 
-}
-else{toast(res,false);}
-}).catch(e=>{btn.disabled=false;status.textContent="";toast("Gagal mengirim",false);});
+        dklk.selectedIndex = 0;
+        sj.focus();
+    } else {
+        toast(res,false);
+    }
+  })
+  .catch(e=>{
+    btn.disabled=false;
+    status.textContent="";
+    toast("Gagal mengirim data",false);
+  });
 }
 </script>
-</body></html>
+</body>
+</html>
